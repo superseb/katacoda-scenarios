@@ -24,7 +24,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: rancher-demo-svc
+  name: rancher-demo-service
 spec:
   selector:
     app: rancher-demo
@@ -43,5 +43,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: rancher-demo
+          serviceName: rancher-demo-service
           servicePort: 8080
