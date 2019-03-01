@@ -12,7 +12,7 @@ First, we will need to download the k3s binary on the host. This binary is used 
 
 Now we are ready to start the server. For demo purposes, we are pre-configuring a node token and running the k3s server as a background process.
 
-`K3S_CLUSTER_SECRET=thisisverysecret k3s server &`{{execute HOST1}}
+`K3S_CLUSTER_SECRET=thisisverysecret k3s server >/dev/null 2>&1 &`{{execute HOST1}}
 
 You can run the following command to check if the node is in Ready state (you might need to run the command a couple of times, can take up to 30 seconds for the node to register):
 
