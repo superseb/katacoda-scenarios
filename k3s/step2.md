@@ -9,11 +9,11 @@ To start, we need the k3s binary. On the first host we used a simple all-in-one 
 To join the host as an agent to the cluster, we need two things:
 
 * The IP address or DNS name of the server
-* A node token to join the cluster (this is generated automatically by the server on startup, and is stored at `/var/lib/rancher/k3s/server/node-token`)
+* A node token to join the cluster
 
 The following command will print the command for the agent to join the cluster, you can copy paste this command and execute it on node1:
 
-`echo "Run the following command to add a host to the cluster"; echo "k3s agent -s https://$(ip -o -4 addr show dev ens3 | cut -d' ' -f7 | cut -d'/' -f1):6443 -t $(cat /var/lib/rancher/k3s/server/node-token) &"`{{execute HOST1}}
+`k3s agent -s https://[[HOST_IP]]:6443 -t thisisverysecret &`{{execute HOST2}}
 
 Wait for node1 to become Ready in the cluster:
 

@@ -6,9 +6,13 @@ k3s consists of a server and an agent, where the server will run the master comp
 
 - Host 1 will function as server and will also join the cluster by running the agent.
 
-There is a simple install script which can be used to install k3s server, you can click on the command to execute it on the correct host:
+First, we will need to download the k3s binary on the host. This binary is used to start the server.
 
-`curl -sfL https://get.k3s.io | sh -`{{execute HOST1}}
+`wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.1.0/k3s && chmod +x /usr/local/bin/k3s`{{execute HOST1}}
+
+Now we are ready to start the server. For demo purposes, we are pre-configuring a node token and running the k3s server as a background process.
+
+`K3S_CLUSTER_SECRET=thisisverysecret k3s server &`{{execute HOST1}}
 
 You can run the following command to check if the node is in Ready state (you might need to run the command a couple of times, can take up to 30 seconds for the node to register):
 
