@@ -4,9 +4,7 @@ That was pretty easy, let's add another host to this cluster by running the agen
 
 To start, we need the k3s binary. On the first host we used a simple all-in-one script to setup the server and agent simultaneously, for this host we only need to run the agent.
 
-* Download k3s binary: `wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.1.0/k3s`{{execute HOST2}}
-
-* Make the k3s binary executable: `chmod +x /usr/local/bin/k3s`{{execute HOST2}}
+* Download k3s binary and make executable: `wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.1.0/k3s && chmod +x /usr/local/bin/k3s`{{execute HOST2}}
 
 To join the host as an agent to the cluster, we need two things:
 
@@ -15,7 +13,7 @@ To join the host as an agent to the cluster, we need two things:
 
 Run the following command on the master to generate the agent command to join the cluster:
 
-`echo k3s agent -s https://$(ip -o -4 addr show dev ens3 | cut -d' ' -f7 | cut -d'/' -f1):6443 -t $(cat /var/lib/rancher/k3s/server/node-token)`{{execute HOST1}}
+`echo "Run the following command to add a host to the cluster"; echo k3s agent -s https://$(ip -o -4 addr show dev ens3 | cut -d' ' -f7 | cut -d'/' -f1):6443 -t $(cat /var/lib/rancher/k3s/server/node-token)`{{execute HOST1}}
 
 Wait for node1 to become Ready in the cluster:
 
