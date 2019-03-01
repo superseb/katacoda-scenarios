@@ -1,4 +1,4 @@
-# Add a node
+# Add a host to the cluster
 
 That was pretty easy, let's add another host to this cluster by running the agent.
 
@@ -15,4 +15,4 @@ To join the host as an agent to the cluster, we need two things:
 
 Run the following command on the master to generate the agent command to join the cluster:
 
-`k3s agent -s https://$(ip -o -4 addr show dev ens3 | cut -d' ' -f7 | cut -d'/' -f1) -t $(cat /var/lib/rancher/k3s/server/node-token)`{{execute HOST1}}
+`echo k3s agent -s https://$(ip -o -4 addr show dev ens3 | cut -d' ' -f7 | cut -d'/' -f1) -t $(cat /var/lib/rancher/k3s/server/node-token)`{{execute HOST1}}
