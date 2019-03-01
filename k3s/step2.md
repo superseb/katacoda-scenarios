@@ -13,7 +13,7 @@ To join the host as an agent to the cluster, we need two things:
 
 The following command will print the command for the agent to join the cluster, you can copy paste this command and execute it on node1:
 
-`k3s agent -s https://[[HOST_IP]]:6443 -t thisisverysecret &`{{execute HOST2}}
+`K3S_CLUSTER_SECRET=thisisverysecret k3s agent -s https://[[HOST_IP]]:6443 &`{{execute HOST2}}
 
 Wait for node1 to become Ready in the cluster:
 
