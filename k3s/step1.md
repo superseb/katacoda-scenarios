@@ -8,6 +8,7 @@ k3s consists of a server and an agent, where the server will run the master comp
 
 First, we will need to download the k3s binary on the host. This binary is used to start the server.
 
+* Download k3s binary and make executable:
 `wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.1.0/k3s && chmod +x /usr/local/bin/k3s`{{execute HOST1}}
 
 Now we are ready to start the server. For demo purposes, we are pre-configuring a node token and running the k3s server as a background process.
@@ -16,6 +17,15 @@ Now we are ready to start the server. For demo purposes, we are pre-configuring 
 
 You can run the following command to check if the node is in Ready state (you might need to run the command a couple of times, can take up to 30 seconds for the node to register):
 
-`k3s kubectl get node`{{execute HOST1}}
+`k3s kubectl get node`
+
+For your convenience, this will wait until the node shows up as `Ready`:
+
+`until k3s kubectl get node | grep master | grep Ready; do sleep 1; done; k3s kubectl get node`{{execute HOST1}}
 
 As soon as it shows `master` with status `Ready`, you have built your single host cluster!
+
+```
+NAME     STATUS   ROLES    AGE   VERSION
+master   Ready    <none>   0s    v1.13.3-k3s.6
+```
