@@ -16,6 +16,11 @@
         "text": "step3.md"
       }
     ],
+    "assets": {
+        "host01": [
+            {"file": "rancher-demo.yaml.tpl", "target": "/root/rancher-demo.yaml.tpl"}
+        ]
+    },
     "intro": {
       "text": "intro.md"
     },

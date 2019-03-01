@@ -22,4 +22,4 @@ Wait for node1 to become `Ready` in the cluster by retrieving the nodes in the c
 
 For your convenience, the following command will wait until the node shows up as `Ready`:
 
-`until k3s kubectl get node | grep node01 | grep Ready > /dev/null 2>&1; do sleep 1; done; k3s kubectl get node`{{execute HOST1}}
+`until k3s kubectl get node | grep node01 | grep Ready; do sleep 1; done; k3s kubectl get node`{{execute HOST1}}
