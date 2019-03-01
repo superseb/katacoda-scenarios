@@ -17,11 +17,11 @@ Now we are ready to start the server. For demo purposes, we are pre-configuring 
 
 You can run the following command to check if the node is in Ready state (you might need to run the command a couple of times, can take up to 30 seconds for the node to register):
 
-`k3s kubectl get node`
+`k3s kubectl get node`{{execute HOST1}}
 
-For your convenience, this will wait until the node shows up as `Ready`:
+For your convenience, the following command will wait until the node shows up as `Ready`:
 
-`until k3s kubectl get node | grep master | grep Ready; do sleep 1; done; k3s kubectl get node`{{execute HOST1}}
+`until k3s kubectl get node | grep master | grep Ready > /dev/null 2>&1; do sleep 1; done; k3s kubectl get node`{{execute HOST1}}
 
 As soon as it shows `master` with status `Ready`, you have built your single host cluster!
 

@@ -16,6 +16,10 @@ The following command will print the command for the agent to join the cluster, 
 
 `K3S_CLUSTER_SECRET=thisisverysecret k3s agent -s https://[[HOST_IP]]:6443 > /dev/null 2>&1 &`{{execute HOST2}}
 
-Wait for node1 to become Ready in the cluster:
+Wait for node1 to become `Ready` in the cluster by retrieving the nodes in the cluster:
 
-`until k3s kubectl get node | grep master | grep Ready; do sleep 1; done; k3s kubectl get node`{{execute HOST1}}
+`k3s kubectl get node`{{execute HOST1}}
+
+For your convenience, the following command will wait until the node shows up as `Ready`:
+
+`until k3s kubectl get node | grep node1 | grep Ready > /dev/null 2>&1; do sleep 1; done; k3s kubectl get node`{{execute HOST1}}
