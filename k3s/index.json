@@ -18,7 +18,7 @@
     ],
     "assets": {
         "host01": [
-            {"file": "rancher-demo.yaml.tpl", "target": "/root/rancher-demo.yaml.tpl"}
+            {"file": "rancher-demo.yaml.tpl", "target": "/root/"}
         ]
     },
     "intro": {
