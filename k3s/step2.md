@@ -15,4 +15,8 @@ To join the host as an agent to the cluster, we need two things:
 
 Run the following command on the master to generate the agent command to join the cluster:
 
-`echo k3s agent -s https://$(ip -o -4 addr show dev ens3 | cut -d' ' -f7 | cut -d'/' -f1) -t $(cat /var/lib/rancher/k3s/server/node-token)`{{execute HOST1}}
+`echo k3s agent -s https://$(ip -o -4 addr show dev ens3 | cut -d' ' -f7 | cut -d'/' -f1):6443 -t $(cat /var/lib/rancher/k3s/server/node-token)`{{execute HOST1}}
+
+Wait for node1 to become Ready in the cluster:
+
+`k3s kubectl get node`{{execute HOST1}}
