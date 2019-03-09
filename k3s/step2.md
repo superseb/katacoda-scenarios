@@ -5,7 +5,7 @@ That was pretty easy, let's add another host to this cluster by running the agen
 To start, we need the k3s binary just like on the first host. The difference is that we will run it as agent on the second host, and not as server.
 
 * Download k3s binary and make executable:
-`wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.1.0/k3s && chmod +x /usr/local/bin/k3s`{{execute HOST2}}
+`wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.2.0/k3s && chmod +x /usr/local/bin/k3s`{{execute HOST2}}
 
 To join the host as an agent to the cluster, we need two things:
 

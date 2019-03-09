@@ -9,7 +9,7 @@ k3s consists of a server and an agent, where the server will run the master comp
 First, we will need to download the k3s binary on the host. This binary is used to start the server.
 
 * Download k3s binary and make executable:
-`wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.1.0/k3s && chmod +x /usr/local/bin/k3s`{{execute HOST1}}
+`wget -O /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.2.0/k3s && chmod +x /usr/local/bin/k3s`{{execute HOST1}}
 
 Now we are ready to start the server. For demo purposes, we are pre-configuring a node token and running the k3s server as a background process.
 
