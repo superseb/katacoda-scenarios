@@ -94,7 +94,7 @@ while true; do
     LOGINRESPONSE=$(docker run \
         --rm \
         $curlimage \
-        -s "https://$RANCHER_HOSTNAME/v3-public/localProviders/local?action=login" -H 'content-type: application/json' --data-binary '{"username":"admin","password":"'"${RANCHER_PASSWORD}"'"}' --insecure)
+        -s "https://${RANCHER_HOSTNAME}/v3-public/localProviders/local?action=login" -H 'content-type: application/json' --data-binary '{"username":"admin","password":"'"${RANCHER_PASSWORD}"'"}' --insecure)
     LOGINTOKEN=$(echo $LOGINRESPONSE | docker run --rm -i $jqimage -r .token)
 
     if [ "$LOGINTOKEN" != "null" ]; then
