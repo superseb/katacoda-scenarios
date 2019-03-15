@@ -66,10 +66,7 @@ echo $IMPORTCMD > /root/importcmd
 
 else
 # Install k3s on node01
-ssh -o StrictHostKeyChecking=no node01 "curl -sfL https://get.k3s.io | sh -"
-until ssh -o StrictHostKeyChecking=no node01 "k3s kubectl get node"; do 
-  sleep 2
-done
+curl -sfL https://get.k3s.io | sh -
 
 # Run import command on node01
 #ssh -o StrictHostKeyChecking=no node01 "k3s ${IMPORTCMD}"
