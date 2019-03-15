@@ -9,7 +9,7 @@
       }
     ],
     "intro": {
-      "courseData": "setup-rancher2.sh"
+      "code": "setup-rancher2.sh"
     },
     "finish": {
       "text": "finish.md"
