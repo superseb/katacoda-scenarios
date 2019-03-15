@@ -1,4 +1,5 @@
 #!/bin/bash
+if [ $HOSTNAME == "master" ]; then
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
 # Create password
@@ -70,3 +71,4 @@ done
 
 # Run import command on node01
 ssh -o StrictHostKeyChecking=no node01 "k3s ${IMPORTCMD}"
+fi
