@@ -69,10 +69,57 @@ IMPORTCMD=$(docker run \
 
 echo $IMPORTCMD > /root/importcmd
 
+echo "Login to Rancher"
+echo "$RANCHER_SERVER"
+echo "Username: admin"
+echo "Password: $(cat /root/rancher_password)"
+
 else
+RANCHER_HOSTNAME="[[HOST2_SUBDOMAIN]]-443-[[KATACODA_HOST]].environments.katacoda.com"
+RANCHER_PASSWORD=$(ssh -o StrictHostKeyChecking=no node01 cat /root/rancher_password)
+
 # Install k3s on node01
 curl -sfL https://get.k3s.io | sh -
 
-# Run import command on node01
-#ssh -o StrictHostKeyChecking=no node01 "k3s ${IMPORTCMD}"
+# wait for Rancher to be started
+while true; do
+  docker run --rm $curlimage -sLk https://$RANCHER_HOSTNAME/ping && break
+  sleep 5
+done
+
+# Login
+while true; do
+
+    LOGINRESPONSE=$(docker run \
+        --rm \
+        $curlimage \
+        -s "https://$RANCHER_HOSTNAME/v3-public/localProviders/local?action=login" -H 'content-type: application/json' --data-binary '{"username":"admin","password":"'"${RANCHER_PASSWORD}"'"}' --insecure)
+    LOGINTOKEN=$(echo $LOGINRESPONSE | docker run --rm -i $jqimage -r .token)
+
+    if [ "$LOGINTOKEN" != "null" ]; then
+        break
+    else
+        sleep 5
+    fi
+done
+
+# Test if cluster is created
+while true; do
+  CLUSTERID=$(docker run \
+    --rm \
+    $curlimage \
+      -sLk \
+      -H "Authorization: Bearer $LOGINTOKEN" \
+      "https://$RANCHER_HOSTNAME/v3/clusters?name=${cluster_name}" | docker run --rm -i $jqimage -r '.data[].id')
+
+  if [ -n "$CLUSTERID" ]; then
+    break
+  else
+    sleep 5
+  fi
+done
+
+# Run import command on master
+IMPORTCMD=$(ssh -o StrictHostKeyChecking=no node01 cat /root/importcmd)
+k3s $IMPORTCMD
 fi
