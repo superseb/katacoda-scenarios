@@ -57,6 +57,7 @@ CLUSTERID=`echo $CLUSTERRESPONSE | docker run --rm -i $jqimage -r .id`
 
 IMPORTCMD=$(docker run \
     --rm \
+    --net=host \
     $curlimage \
       -sLk \
       -H "Authorization: Bearer $LOGINTOKEN" \
