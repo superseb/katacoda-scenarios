@@ -1,6 +1,6 @@
 {
-  "title": "Import k3s into Rancher 2",
-  "description": "Import k3s single node cluster into Rancher 2",
+  "title": "Import k3s into Rancher",
+  "description": "Import k3s single node cluster into Rancher",
   "details": {
     "steps": [
       {
@@ -9,7 +9,7 @@
       }
     ],
     "intro": {
-      "code": "setup-rancher2.sh"
+      "code": "setup-rancher.sh"
     },
     "finish": {
       "text": "finish.md"
