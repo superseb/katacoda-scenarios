@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $HOSTNAME == "master" ]; then
+if [ $HOSTNAME == "node01" ]; then
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
 # Create password
@@ -46,9 +46,8 @@ APIRESPONSE=$(docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/tok
 APITOKEN=`echo $APIRESPONSE | docker run --rm -i $jqimage -r .token`
 
 # Configure server-url
-RANCHER_SERVER="https://[[HOST_SUBDOMAIN]]-443-[[KATACODA_HOST]].environments.katacoda.com"
-
-docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/settings/server-url' -H 'content-type: application/json' -H "Authorization: Bearer $APITOKEN" -X PUT --data-binary '{"name":"server-url","value":"'$RANCHER_SERVER'"}' --insecure
+RANCHER_SERVER="https://[[HOST2_SUBDOMAIN]]-443-[[KATACODA_HOST]].environments.katacoda.com"
+docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/settings/server-url' -H 'content-type: application/json' -H "Authorization: Bearer $APITOKEN" -X PUT --data-binary '{"name":"server-url","value":"'"${RANCHER_SERVER}"'"}' --insecure
 
 # Create import cluster
 CLUSTERRESPONSE=$(docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/cluster' -H 'content-type: application/json' -H "Authorization: Bearer $APITOKEN" -X PUT --data-binary '{"dockerRootDir":"/var/lib/docker","enableNetworkPolicy":false,"type":"cluster","name":"k3s"}' --insecure)
@@ -63,6 +62,9 @@ IMPORTCMD=$(docker run \
       -H "Authorization: Bearer $LOGINTOKEN" \
       "https://${RANCHER_SERVER}/v3/clusterregistrationtoken?clusterId=$CLUSTERID" | docker run --rm -i $jqimage -r '.data[].command' | head -1)
 
+echo $IMPORTCMD > /root/importcmd
+
+else
 # Install k3s on node01
 ssh -o StrictHostKeyChecking=no node01 "curl -sfL https://get.k3s.io | sh -"
 until ssh -o StrictHostKeyChecking=no node01 "k3s kubectl get node"; do 
@@ -70,5 +72,5 @@ until ssh -o StrictHostKeyChecking=no node01 "k3s kubectl get node"; do
 done
 
 # Run import command on node01
-ssh -o StrictHostKeyChecking=no node01 "k3s ${IMPORTCMD}"
+#ssh -o StrictHostKeyChecking=no node01 "k3s ${IMPORTCMD}"
 fi
