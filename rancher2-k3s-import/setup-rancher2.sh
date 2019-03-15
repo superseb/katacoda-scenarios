@@ -84,6 +84,7 @@ curl -sfL https://get.k3s.io | sh -
 # wait for Rancher to be started
 while true; do
   docker run --rm $curlimage -sLk https://$RANCHER_HOSTNAME/ping && break
+  echo "Waiting for Rancher to start on ${RANCHER_HOSTNAME}..."
   sleep 5
 done
 
@@ -110,11 +111,12 @@ while true; do
     $curlimage \
       -sLk \
       -H "Authorization: Bearer $LOGINTOKEN" \
-      "https://$RANCHER_HOSTNAME/v3/clusters?name=${cluster_name}" | docker run --rm -i $jqimage -r '.data[].id')
+      "https://$RANCHER_HOSTNAME/v3/clusters?name=k3s" | docker run --rm -i $jqimage -r '.data[].id')
 
   if [ -n "$CLUSTERID" ]; then
     break
   else
+    echo "Waiting for cluster to be created..."
     sleep 5
   fi
 done
