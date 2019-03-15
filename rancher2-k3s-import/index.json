@@ -9,6 +9,7 @@
       }
     ],
     "intro": {
+      "text": "intro.md",
       "code": "setup-rancher.sh"
     },
     "finish": {
