@@ -1,0 +1,24 @@
+{
+  "title": "Import k3s into Rancher 2",
+  "description": "Import k3s single node cluster into Rancher 2",
+  "details": {
+    "steps": [
+      {
+        "title": "Step 1",
+        "text": "step1.md"
+      }
+    ],
+    "intro": {
+      "courseData": "setup-rancher2.sh"
+    },
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "environment": {
+    "uilayout": "terminal-terminal"
+  },
+  "backend": {
+    "imageid": "kubernetes-cluster"
+  }
+}
