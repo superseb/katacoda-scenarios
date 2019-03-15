@@ -5,7 +5,7 @@ RANCHER_PASSWORD=$(date +%s | sha256sum | base64 | head -c 15 ; echo)
 echo $RANCHER_PASSWORD > /root/rancher_password
 
 until docker inspect rancher/rancher:master > /dev/null 2>&1; do
-  docker pull $image
+  docker pull rancher/rancher:master
   sleep 2
 done
 
