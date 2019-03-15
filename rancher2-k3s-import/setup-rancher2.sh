@@ -69,8 +69,10 @@ IMPORTCMD=$(docker run \
 
 echo $IMPORTCMD > /root/importcmd
 
-echo "Login to Rancher"
-echo "$RANCHER_SERVER"
+clear
+
+echo "Rancher is ready"
+echo "Login to Rancher: $RANCHER_SERVER"
 echo "Username: admin"
 echo "Password: $(cat /root/rancher_password)"
 
@@ -125,4 +127,8 @@ done
 # Run import command on master
 IMPORTCMD=$(ssh -o StrictHostKeyChecking=no node01 cat /root/importcmd)
 k3s $IMPORTCMD
+
+clear
+
+echo "k3s cluster successfully imported to Rancher"
 fi
