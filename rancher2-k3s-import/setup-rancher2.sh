@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 if [ $HOSTNAME == "node01" ]; then
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
@@ -60,7 +60,7 @@ IMPORTCMD=$(docker run \
     $curlimage \
       -sLk \
       -H "Authorization: Bearer $LOGINTOKEN" \
-      "https://${RANCHER_SERVER}/v3/clusterregistrationtoken?clusterId=$CLUSTERID" | docker run --rm -i $jqimage -r '.data[].command' | head -1)
+      "https://127.0.0.1/v3/clusterregistrationtoken?clusterId=$CLUSTERID" | docker run --rm -i $jqimage -r '.data[].command' | head -1)
 
 echo $IMPORTCMD > /root/importcmd
 
