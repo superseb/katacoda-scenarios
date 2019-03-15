@@ -12,7 +12,7 @@ until docker inspect rancher/rancher:master > /dev/null 2>&1; do
   sleep 2
 done
 
-docker run -d -p 80:80 -p 443:443 rancher/rancher:master
+docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:master
 
 while true; do
   docker run --rm --net=host $curlimage -sLk https://127.0.0.1/ping && break
