@@ -1,4 +1,5 @@
 #!/bin/bash -x
+
 if [ $HOSTNAME == "node01" ]; then
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
@@ -55,13 +56,16 @@ CLUSTERRESPONSE=$(docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3
 # Extract import command
 CLUSTERID=`echo $CLUSTERRESPONSE | docker run --rm -i $jqimage -r .id`
 
+# Generate registrationtoken
+docker run --rm --net=host $curlimage -s 'https://127.0.0.1/v3/clusterregistrationtoken' -H 'content-type: application/json' -H "Authorization: Bearer $APITOKEN" --data-binary '{"type":"clusterRegistrationToken","clusterId":"'"$CLUSTERID"'"}' --insecure
+
 IMPORTCMD=$(docker run \
     --rm \
     --net=host \
     $curlimage \
-      -sLk \
-      -H "Authorization: Bearer $LOGINTOKEN" \
-      "https://127.0.0.1/v3/clusterregistrationtoken?clusterId=$CLUSTERID" | docker run --rm -i $jqimage -r '.data[].command' | head -1)
+      -s \
+      -H "Authorization: Bearer $APITOKEN" \
+      "https://127.0.0.1/v3/clusterregistrationtoken?clusterId=$CLUSTERID" --insecure | docker run --rm -i $jqimage -r '.data[].command' | head -1)
 
 echo $IMPORTCMD > /root/importcmd
 
