@@ -1,4 +1,6 @@
 #!/bin/bash
+curlimage="appropriate/curl"
+jqimage="stedolan/jq"
 # Create password
 RANCHER_PASSWORD=$(date +%s | sha256sum | base64 | head -c 15 ; echo)
 
