@@ -97,9 +97,10 @@ while true; do
         -s "https://${RANCHER_HOSTNAME}/v3-public/localProviders/local?action=login" -H 'content-type: application/json' --data-binary '{"username":"admin","password":"'"${RANCHER_PASSWORD}"'"}' --insecure)
     LOGINTOKEN=$(echo $LOGINRESPONSE | docker run --rm -i $jqimage -r .token)
 
-    if [ "$LOGINTOKEN" != "null" ]; then
+    if [ "$LOGINTOKEN" != "null" ] && [ "$LOGINTOKEN" != "" ]; then
         break
     else
+        echo "Waiting for login to succeed"
         sleep 5
     fi
 done
