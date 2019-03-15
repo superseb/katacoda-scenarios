@@ -1,8 +1,8 @@
 #!/bin/bash -x
-
-if [ $HOSTNAME == "node01" ]; then
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
+
+if [ $HOSTNAME == "node01" ]; then
 # Create password
 RANCHER_PASSWORD=$(openssl rand -base64 12)
 
