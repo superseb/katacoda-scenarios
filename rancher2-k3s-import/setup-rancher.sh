@@ -80,6 +80,10 @@ else
     # This is for master
     RANCHER_HOSTNAME="[[HOST2_SUBDOMAIN]]-443-[[KATACODA_HOST]].environments.katacoda.com"
     
+    # Disable built-in kubelet
+    systemctl disable kubelet
+    systemctl stop kubelet
+
     # Install k3s on node01
     curl -sfL https://get.k3s.io | sh -
     
