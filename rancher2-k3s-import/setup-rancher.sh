@@ -8,12 +8,12 @@ if [ $HOSTNAME == "node01" ]; then
     
     echo $RANCHER_PASSWORD > /root/rancher_password
     
-    until docker inspect rancher/rancher:master > /dev/null 2>&1; do
-      docker pull rancher/rancher:master
+    until docker inspect rancher/rancher:latest > /dev/null 2>&1; do
+      docker pull rancher/rancher:latest
       sleep 2
     done
     
-    docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:master
+    docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:latest
     
     while true; do
       docker run --rm --net=host $curlimage -sLk https://127.0.0.1/ping && break

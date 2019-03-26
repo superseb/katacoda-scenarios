@@ -1,6 +1,6 @@
 # Environment is being created
 
-Note: This environment runs `rancher/rancher:master` which is the master build of Rancher, this is for testing purposes only. Please refer to the [official documentation](https://docs.rancher.com) how to setup Rancher.
+Note: This environment runs `rancher/rancher:latest` which is the latest version of Rancher, this is the latest development release. Please refer to the [official documentation](https://docs.rancher.com) how to setup Rancher in production.
 
 The node `node01` is used to run Rancher (single node install).
 
