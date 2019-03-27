@@ -38,7 +38,6 @@ if [ $HOSTNAME == "node01" ]; then
             $curlimage \
             -s "https://127.0.0.1/v3-public/localProviders/local?action=login" -H 'content-type: application/json' --data-binary '{"username":"admin","password":"admin"}' --insecure)
         LOGINTOKEN=$(echo $LOGINRESPONSE | docker run --rm -i $jqimage -r .token)
-        echo "Login Token is $LOGINTOKEN"
         if [ "$LOGINTOKEN" != "null" ]; then
             break
         else
