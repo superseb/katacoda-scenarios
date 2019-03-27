@@ -2,6 +2,13 @@
 curlimage="appropriate/curl"
 jqimage="stedolan/jq"
 
+for image in $curlimage $jqimage; do
+  until docker inspect $image > /dev/null 2>&1; do
+    docker pull $image
+    sleep 2
+  done
+done
+
 if [ $HOSTNAME == "node01" ]; then
     # Create password
     RANCHER_PASSWORD=$(openssl rand -base64 12)
