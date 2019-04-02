@@ -144,8 +144,27 @@ else
 
     IMPORTCMD=$(ssh -o StrictHostKeyChecking=no node01 cat /root/importcmd)
     k3s $IMPORTCMD
+
+    # Wait til cluster agent is running
     k3s kubectl rollout status deploy cattle-cluster-agent -n cattle-system
+
+    # Wait til cluster is active
+    while true; do
+      CLUSTERSTATE=$(docker run \
+        --rm \
+        $curlimage \
+          -sLk \
+          -H "Authorization: Bearer $LOGINTOKEN" \
+          "https://$RANCHER_HOSTNAME/v3/clusters?name=k3s" | docker run --rm -i $jqimage -r '.data[].state')
     
+      if [ "$CLUSTERID" == "active" ]; then
+        break
+      else
+        echo "Waiting for cluster to be ready..."
+        sleep 5
+      fi
+    done
+
     clear
     
     echo "k3s cluster successfully imported to Rancher"
