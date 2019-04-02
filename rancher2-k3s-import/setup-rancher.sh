@@ -157,7 +157,7 @@ else
           -H "Authorization: Bearer $LOGINTOKEN" \
           "https://$RANCHER_HOSTNAME/v3/clusters?name=k3s" | docker run --rm -i $jqimage -r '.data[].state')
     
-      if [ "$CLUSTERID" == "active" ]; then
+      if [ "$CLUSTERSTATE" == "active" ]; then
         break
       else
         echo "Waiting for cluster to be ready..."
