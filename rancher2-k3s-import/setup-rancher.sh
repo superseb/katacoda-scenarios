@@ -92,8 +92,9 @@ else
     systemctl disable kubelet
     systemctl stop kubelet
 
-    # Install k3s on node01
+    # Install k3s
     curl -sfL https://get.k3s.io | sh -
+    until k3s kubectl get node | grep master | grep -q ' Ready'; do echo "Waiting for master to become Ready"; sleep 1; done
     
     # wait for Rancher to be started
     while true; do
@@ -143,6 +144,7 @@ else
 
     IMPORTCMD=$(ssh -o StrictHostKeyChecking=no node01 cat /root/importcmd)
     k3s $IMPORTCMD
+    k3s kubectl rollout status deploy cattle-cluster-agent -n cattle-system
     
     clear
     
