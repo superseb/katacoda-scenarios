@@ -1,6 +1,6 @@
 {
   "title": "Rancher 2 and custom cluster",
-  "description": "Run Rancher, create a custom cluster and add a node",
+  "description": "Run Rancher, create a custom cluster and add a node to the cluster",
   "details": {
     "steps": [
       {
