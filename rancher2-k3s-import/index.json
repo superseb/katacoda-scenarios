@@ -1,6 +1,6 @@
 {
-  "title": "Import k3s into Rancher",
-  "description": "Import k3s single node cluster into Rancher",
+  "title": "Import k3s into Rancher (latest)",
+  "description": "Import k3s (latest) single node cluster into Rancher (latest)",
   "details": {
     "steps": [
       {
