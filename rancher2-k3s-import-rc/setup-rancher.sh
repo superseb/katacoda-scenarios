@@ -15,19 +15,19 @@ if [ $HOSTNAME == "node01" ]; then
     
     echo $RANCHER_PASSWORD > /root/rancher_password
     
-    until docker inspect rancher/rancher:latest > /dev/null 2>&1; do
-      docker pull rancher/rancher:latest
+    RANCHER_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rancher/releases | docker run --rm -i $jqimage -r .[].tag_name | grep ^v2 | head -1)
+
+    until docker inspect rancher/rancher:$RANCHER_VERSION > /dev/null 2>&1; do
+      docker pull rancher/rancher:$RANCHER_VERSION
       sleep 2
     done
 
-    RANCHER_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rancher/releases | docker run --rm -i $jqimage -r .[].tag_name | grep ^v2 | head -1)
-    
     docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:$RANCHER_VERSION
     
     while true; do
       docker run --rm --net=host $curlimage -sLk https://127.0.0.1/ping && break
       # check if Rancher is not in restarting mode
-      if [ $(docker inspect $(docker ps -q --filter ancestor=rancher/rancher:latest) --format='{{.State.Restarting}}') == "true" ]; then docker rm -f $(docker ps -q --filter ancestor=rancher/rancher:latest); docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:latest; fi
+      if [ $(docker inspect $(docker ps -q --filter ancestor=rancher/rancher:$RANCHER_VERSION) --format='{{.State.Restarting}}') == "true" ]; then docker rm -f $(docker ps -q --filter ancestor=rancher/rancher:$RANCHER_VERSION); docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:$RANCHER_VERSION; fi
       sleep 5
     done
     
