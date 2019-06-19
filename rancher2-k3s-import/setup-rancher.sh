@@ -9,6 +9,8 @@ for image in $curlimage $jqimage; do
   done
 done
 
+service docker restart
+
 if [ $HOSTNAME == "node01" ]; then
     # Create password
     RANCHER_PASSWORD=$(openssl rand -base64 12)
