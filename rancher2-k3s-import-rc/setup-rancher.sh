@@ -108,7 +108,7 @@ else
       sleep 5
     done
     
-    RANCHER_PASSWORD=$(ssh -o StrictHostKeyChecking=no node01 cat /root/rancher_password)
+    RANCHER_PASSWORD=$(ssh -o StrictHostKeyChecking=no [[HOST2_IP]] cat /root/rancher_password)
     
     # Login
     while true; do
