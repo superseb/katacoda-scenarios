@@ -25,7 +25,7 @@ if [ $HOSTNAME == "node01" ]; then
     docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:latest
     
     while true; do
-      docker run --rm --net=host $curlimage -sLk https://127.0.0.1/ping && break
+      docker run --rm --net=host $curlimage -slk --connect-timeout 5 --max-time 5 https://127.0.0.1/ping && break
       # check if Rancher is not in restarting mode
       if [ $(docker inspect $(docker ps -q --filter ancestor=rancher/rancher:latest) --format='{{.State.Restarting}}') == "true" ]; then docker rm -f $(docker ps -q --filter ancestor=rancher/rancher:latest); docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:latest; fi
       sleep 5
@@ -100,7 +100,7 @@ else
     
     # wait for Rancher to be started
     while true; do
-      docker run --rm $curlimage -sLk https://$RANCHER_HOSTNAME/ping && break
+      docker run --rm $curlimage -slk --connect-timeout 5 --max-time 5 https://$RANCHER_HOSTNAME/ping && break
       echo "Waiting for Rancher to start on ${RANCHER_HOSTNAME}..."
       sleep 5
     done
@@ -129,7 +129,7 @@ else
       CLUSTERID=$(docker run \
         --rm \
         $curlimage \
-          -sLk \
+          -slk --connect-timeout 5 --max-time 5 \
           -H "Authorization: Bearer $LOGINTOKEN" \
           "https://$RANCHER_HOSTNAME/v3/clusters?name=k3s" | docker run --rm -i $jqimage -r '.data[].id')
     
@@ -155,7 +155,7 @@ else
       CLUSTERSTATE=$(docker run \
         --rm \
         $curlimage \
-          -sLk \
+          -slk --connect-timeout 5 --max-time 5 \
           -H "Authorization: Bearer $LOGINTOKEN" \
           "https://$RANCHER_HOSTNAME/v3/clusters?name=k3s" | docker run --rm -i $jqimage -r '.data[].state')
     
