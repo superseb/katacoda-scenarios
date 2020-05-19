@@ -17,7 +17,7 @@ if [ $HOSTNAME == "node01" ]; then
     
     echo $RANCHER_PASSWORD > /root/rancher_password
     
-    RANCHER_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rancher/releases | docker run --rm -i $jqimage -r .[].tag_name | grep ^v2 | head -1)
+    RANCHER_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rancher/releases | docker run --rm -i $jqimage -r .[].tag_name | grep ^v2 | grep rc | sort -V | tail -1)
 
     until docker inspect rancher/rancher:$RANCHER_VERSION > /dev/null 2>&1; do
       docker pull rancher/rancher:$RANCHER_VERSION
@@ -97,7 +97,7 @@ else
     systemctl stop kubelet
 
     # Install k3s
-    K3S_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/k3s/releases | docker run --rm -i $jqimage -r .[].tag_name | head -1)
+    K3S_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/k3s/releases | docker run --rm -i $jqimage -r .[].tag_name | grep rc | sort -V | tail -1)
     curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=$K3S_VERSION sh -
     until k3s kubectl get node | grep master | grep -q ' Ready'; do echo "Waiting for master to become Ready"; sleep 1; done
     
