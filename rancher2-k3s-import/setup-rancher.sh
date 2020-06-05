@@ -26,8 +26,6 @@ if [ $HOSTNAME == "node01" ]; then
     
     while true; do
       docker run --rm --net=host $curlimage -slk --connect-timeout 5 --max-time 5 https://127.0.0.1/ping && break
-      # check if Rancher is not in restarting mode
-      if [ $(docker inspect $(docker ps -q --filter ancestor=rancher/rancher:latest) --format='{{.State.Restarting}}') == "true" ]; then docker rm -f $(docker ps -q --filter ancestor=rancher/rancher:latest); docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:latest; fi
       sleep 5
     done
     
