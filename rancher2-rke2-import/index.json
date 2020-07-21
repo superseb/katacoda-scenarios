@@ -1,0 +1,25 @@
+{
+  "title": "Import RKE2 into Rancher (latest)",
+  "description": "Import RKE2 (latest) single node cluster into Rancher (latest)",
+  "details": {
+    "steps": [
+      {
+        "title": "Step 1",
+        "text": "step1.md"
+      }
+    ],
+    "intro": {
+      "text": "intro.md",
+      "code": "setup-rancher.sh"
+    },
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "environment": {
+    "uilayout": "terminal-terminal"
+  },
+  "backend": {
+    "imageid": "kubernetes-cluster"
+  }
+}
