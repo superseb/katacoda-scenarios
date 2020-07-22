@@ -1,0 +1,37 @@
+{
+  "title": "Explore rke2",
+  "description": "Get to know how to easily setup rke2",
+  "details": {
+    "steps": [
+      {
+        "title": "Step 1",
+        "text": "step1.md"
+      },
+      {
+        "title": "Step 2",
+        "text": "step2.md"
+      },
+      {
+        "title": "Step 3",
+        "text": "step3.md"
+      }
+    ],
+    "assets": {
+        "host01": [
+            {"file": "rancher-demo.yaml.tpl", "target": "/root/"}
+        ]
+    },
+    "intro": {
+      "text": "intro.md"
+    },
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "environment": {
+    "uilayout": "terminal-terminal"
+  },
+  "backend": {
+    "imageid": "kubernetes-cluster"
+  }
+}
