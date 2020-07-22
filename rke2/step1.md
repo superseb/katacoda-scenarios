@@ -8,15 +8,15 @@ rke2 consists of a server and an agent, where the server will run the master com
 
 There is a simple `curl` oneliner to install rke2. For demo purposes, we are pre-configuring a cluster secret.
 
-`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=v1.18.4-alpha15+rke2 RKE2_CLUSTER_SECRET=thisisverysecret sh -`{{execute HOST1}}
+`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=v1.18.4-alpha15+rke2 RKE2_CLUSTER_SECRET=thisisverysecret sh -`{{execute HOST2}}
 
 You can run the following command to check if the node is in Ready state (you might need to run the command a couple of times, can take up to 30 seconds for the node to register):
 
-`kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get node`{{execute HOST1}}
+`kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get node`{{execute HOST2}}
 
 For your convenience, the following command will wait until the node shows up as `Ready`:
 
-`until kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get node 2>/dev/null | grep master | grep -q ' Ready'; do sleep 1; done; kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get node`{{execute HOST1}}
+`until kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get node 2>/dev/null | grep master | grep -q ' Ready'; do sleep 1; done; kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get node`{{execute HOST2}}
 
 As soon as it shows `master` with status `Ready`, you have built your single host cluster!
 
