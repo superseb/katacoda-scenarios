@@ -93,11 +93,11 @@ else
     systemctl stop kubelet
 
     # Install rke2
-    #RKE2_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rke2/releases | docker run --rm -i $jqimage -r .[].tag_name | sort -V | tail -1)
-    #curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=$RKE2_VERSION sh -x -
-    wget 'https://raw.githubusercontent.com/rancher/rke2/v1.18.4-alpha9%2Brke2/install.sh'
-    RKE2_VERSION="v1.18.4-alpha9+rke2"
-    INSTALL_RKE2_VERSION=$RKE2_VERSION sh -x install.sh
+    RKE2_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rke2/releases | docker run --rm -i $jqimage -r .[].tag_name | sort -V | tail -1)
+    curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=$RKE2_VERSION sh -x -
+    #wget 'https://raw.githubusercontent.com/rancher/rke2/v1.18.4-alpha9%2Brke2/install.sh'
+    #RKE2_VERSION="v1.18.4-alpha9+rke2"
+    #INSTALL_RKE2_VERSION=$RKE2_VERSION sh -x install.sh
     export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
     until kubectl get node | grep master | grep -q ' Ready'; do echo "Waiting for master to become Ready"; sleep 1; done
     
