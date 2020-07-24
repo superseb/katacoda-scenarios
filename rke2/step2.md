@@ -9,7 +9,7 @@ To add the host as an agent to the cluster, we need two things:
 
 Run the following command on `controlplane` to add the host to the cluster:
 
-`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=v1.18.4-alpha15+rke2 RKE2_TOKEN=dummy RKE2_URL=https://[[HOST2_IP]]:9345 sh - && export NODE_TOKEN=$(ssh -q node01 cat /var/lib/rancher/rke2/server/node-token) && sed -i '/ agent / s_agent.*_agent --server=https://[[HOST2_IP]]:9345 --token='"$NODE_TOKEN"'_g' /etc/systemd/system/rke2-agent.service && systemctl daemon-reload && systemctl restart rke2-agent`{{execute HOST1}}
+`RKE2_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rke2/releases | docker run --rm -i $jqimage -r .[].tag_name | sort -V | tail -1) && NODE_TOKEN=$(ssh -q node01 cat /var/lib/rancher/rke2/server/node-token) && curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=$RKE2_VERSION RKE2_TOKEN=$NODE_TOKEN RKE2_URL=https://[[HOST2_IP]]:9345 sh -`{{execute HOST1}}
 
 Wait for node1 to become `Ready` in the cluster by retrieving the nodes in the cluster:
 

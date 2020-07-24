@@ -8,7 +8,7 @@ rke2 consists of a server and an agent, where the server will run the master com
 
 There is a simple `curl` oneliner to install rke2.
 
-`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=v1.18.4-alpha15+rke2 sh -`{{execute HOST2}}
+`RKE2_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rke2/releases | docker run --rm -i $jqimage -r .[].tag_name | sort -V | tail -1) && curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=$RKE2_VERSION sh -`{{execute HOST2}}
 
 You can run the following command to check if the node is in Ready state (you might need to run the command a couple of times, can take up to 30 seconds for the node to register):
 
@@ -22,5 +22,5 @@ As soon as it shows `node01` with status `Ready`, you have built your single hos
 
 ```
 NAME             STATUS   ROLES         AGE   VERSION
-node01           Ready    etcd,master   3m    v1.18.4-alpha15+rke2
+node01           Ready    etcd,master   3m    v1.18.4-alpha20+rke2
 ```
