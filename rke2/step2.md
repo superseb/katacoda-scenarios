@@ -19,7 +19,7 @@ Run the following commands on `controlplane` to add the host to the cluster:
 
 * Run the `install.sh` script with the retrieved variables
 
-`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=$RKE2_VERSION RKE2_TOKEN=$NODE_TOKEN RKE2_URL=https://[[HOST2_IP]]:9345 sh -`{{execute HOST1}}
+`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_EXEC="--node-ip=[[HOST1_IP]]" INSTALL_RKE2_VERSION=$RKE2_VERSION RKE2_TOKEN=$NODE_TOKEN RKE2_URL=https://[[HOST2_IP]]:9345 sh -`{{execute HOST1}}
 
 Wait for node1 to become `Ready` in the cluster by retrieving the nodes in the cluster:
 
