@@ -10,7 +10,7 @@ Wait for the pods to be running:
 
 Now you can access the created workload by clicking on the following link:
 
-http://[[HOST2_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com/
+https://[[HOST2_SUBDOMAIN]]-80-[[KATACODA_HOST]].environments.katacoda.com/
 
 After checking it out, scale the deployment to more replicas and see the result:
 
