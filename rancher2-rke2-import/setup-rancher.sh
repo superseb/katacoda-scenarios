@@ -146,9 +146,9 @@ else
     done
     
     # Run import command on master
-    until ssh -o StrictHostKeyChecking=no node01 cat /root/importcmd >/dev/null 2>&1; do sleep 1; done
+    until ssh -o StrictHostKeyChecking=no [[HOST_IP]] cat /root/importcmd >/dev/null 2>&1; do sleep 1; done
 
-    IMPORTCMD=$(ssh -o StrictHostKeyChecking=no node01 cat /root/importcmd)
+    IMPORTCMD=$(ssh -o StrictHostKeyChecking=no [[HOST_IP]] cat /root/importcmd)
     $IMPORTCMD
 
     # Wait til cluster agent is running
