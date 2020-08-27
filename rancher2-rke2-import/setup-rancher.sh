@@ -106,6 +106,7 @@ else
       sleep 5
     done
     
+    echo "Retrieving password from [[HOST_IP]]"
     RANCHER_PASSWORD=$(ssh -o StrictHostKeyChecking=no [[HOST_IP]] cat /root/rancher_password)
     
     # Login
@@ -145,10 +146,13 @@ else
       fi
     done
     
-    # Run import command on master
+    echo "Retrieving import command from [[HOST_IP]]"
     until ssh -o StrictHostKeyChecking=no [[HOST_IP]] cat /root/importcmd >/dev/null 2>&1; do sleep 1; done
 
+    # Run import command on master
+    echo "Running import command from [[HOST_IP]]"
     IMPORTCMD=$(ssh -o StrictHostKeyChecking=no [[HOST_IP]] cat /root/importcmd)
+    echo "Import command: $IMPORTCMD"
     $IMPORTCMD
 
     # Wait til cluster agent is running
