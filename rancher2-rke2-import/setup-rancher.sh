@@ -100,7 +100,8 @@ else
     
     # wait for Rancher to be started
     while true; do
-      docker run --rm $curlimage -slk --connect-timeout 5 --max-time 5 https://$RANCHER_HOSTNAME/ping && break
+      #docker run --rm $curlimage -slk --connect-timeout 5 --max-time 5 https://$RANCHER_HOSTNAME/ping && break
+      curl -slk --connect-timeout 5 --max-time 5 https://$RANCHER_HOSTNAME/ping && break
       echo "Waiting for Rancher to start on ${RANCHER_HOSTNAME}..."
       sleep 5
     done
@@ -110,11 +111,13 @@ else
     # Login
     while true; do
     
-        LOGINRESPONSE=$(docker run \
-            --rm \
-            $curlimage \
+#        LOGINRESPONSE=$(docker run \
+#            --rm \
+#            $curlimage \
+	LOGINRESPONSE=$(curl \
             -s "https://${RANCHER_HOSTNAME}/v3-public/localProviders/local?action=login" -H 'content-type: application/json' --data-binary '{"username":"admin","password":"'"${RANCHER_PASSWORD}"'"}' --insecure)
-        LOGINTOKEN=$(echo $LOGINRESPONSE | docker run --rm -i $jqimage -r .token)
+#        LOGINTOKEN=$(echo $LOGINRESPONSE | docker run --rm -i $jqimage -r .token)
+        LOGINTOKEN=$(echo $LOGINRESPONSE | jq -r .token)
     
         if [ "$LOGINTOKEN" != "null" ] && [ "$LOGINTOKEN" != "" ]; then
             break
@@ -126,12 +129,13 @@ else
     
     # Test if cluster is created
     while true; do
-      CLUSTERID=$(docker run \
-        --rm \
-        $curlimage \
+#      CLUSTERID=$(docker run \
+#        --rm \
+       CLUSTERID=$(curl \
           -slk --connect-timeout 5 --max-time 5 \
           -H "Authorization: Bearer $LOGINTOKEN" \
-          "https://$RANCHER_HOSTNAME/v3/clusters?name=rke2" | docker run --rm -i $jqimage -r '.data[].id')
+#          "https://$RANCHER_HOSTNAME/v3/clusters?name=rke2" | docker run --rm -i $jqimage -r '.data[].id')
+          "https://$RANCHER_HOSTNAME/v3/clusters?name=rke2" | jq -r '.data[].id')
     
       if [ -n "$CLUSTERID" ]; then
         break
@@ -152,12 +156,13 @@ else
 
     # Wait til cluster is active
     while true; do
-      CLUSTERSTATE=$(docker run \
-        --rm \
-        $curlimage \
+#      CLUSTERSTATE=$(docker run \
+#        --rm \
+       CLUSTERSTATE=$(curl \
           -slk --connect-timeout 5 --max-time 5 \
           -H "Authorization: Bearer $LOGINTOKEN" \
-          "https://$RANCHER_HOSTNAME/v3/clusters?name=rke2" | docker run --rm -i $jqimage -r '.data[].state')
+#          "https://$RANCHER_HOSTNAME/v3/clusters?name=rke2" | docker run --rm -i $jqimage -r '.data[].state')
+          "https://$RANCHER_HOSTNAME/v3/clusters?name=rke2" | jq -r '.data[].state')
     
       if [ "$CLUSTERSTATE" == "active" ]; then
         break
