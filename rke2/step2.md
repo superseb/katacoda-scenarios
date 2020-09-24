@@ -5,23 +5,23 @@ That was pretty easy, let's add another host to this cluster by running the agen
 To add the host as an agent to the cluster, we need two things:
 
 * The IP address or DNS name of the server (in this case, the IP address of the host with hostname `node01`)
-* A cluster secret to join the cluster (located at `/var/lib/rancher/rke2/server/node-token` on host `node01`)
+* A cluster secret to join the cluster (this was set to `thisisverysecret` in the server config)
 
 Run the following commands on `controlplane` to add the host to the cluster:
 
-* Retrieve the latest RKE2 version from GitHub
-
-`RKE2_VERSION=$(docker run --rm --net=host appropriate/curl -s https://api.github.com/repos/rancher/rke2/releases | docker run --rm -i stedolan/jq -r .[].tag_name | sort -V | tail -1)`{{execute HOST1}}
-
-* Retrieve the generated node token from the master
-
-`NODE_TOKEN=$(ssh -q node01 cat /var/lib/rancher/rke2/server/node-token)`{{execute HOST1}}
-
 * Run the `install.sh` script with the retrieved variables
 
-`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_EXEC="--token $NODE_TOKEN --node-ip=[[HOST1_IP]]" INSTALL_RKE2_VERSION=$RKE2_VERSION INSTALL_RKE2_TYPE=agent RKE2_URL=https://[[HOST2_IP]]:9345 sh -`{{execute HOST1}}
+`curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -`{{execute HOST1}}
 
-Next step is to start the rke2 server:
+* Create a config file for the agent
+
+`mkdir -p /etc/rancher/rke2 && echo -e "server: https://[[HOST2_IP]]:9345\ntoken: thisisverysecret\nnode-ip: [[HOST1_IP]]" > /etc/rancher/rke2/config.yaml && cat /etc/rancher/rke2/config.yaml`{{execute HOST1}}
+
+The install scripts drops systemd files in `/usr/local/lib/systemd/system/`. To make sure these are loaded, we can reload systemd.
+
+`systemctl daemon-reload`{{execute HOST1}}
+
+Next step is to start the rke2 agent:
 
 `systemctl start rke2-agent`{{execute HOST1}}
 
