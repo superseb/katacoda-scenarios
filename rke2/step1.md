@@ -12,7 +12,11 @@ There is a simple `curl` oneliner to install rke2, in this example, we will retr
 
 Then run the `install.sh` script using the retrieved version:
 
-`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_EXEC="--node-ip=[[HOST2_IP]]" INSTALL_RKE2_VERSION=$RKE2_VERSION sh -`{{execute HOST2}}
+`curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_EXEC="--node-ip=[[HOST2_IP]]" INSTALL_RKE2_TYPE=server INSTALL_RKE2_VERSION=$RKE2_VERSION sh -`{{execute HOST2}}
+
+Next step is to start the rke2 server:
+
+`systemctl start rke2-server`{{execute HOST2}}
 
 You can run the following command to check if the node is in Ready state (you might need to run the command a couple of times, can take up to 30 seconds for the node to register):
 

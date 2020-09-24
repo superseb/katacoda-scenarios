@@ -94,7 +94,8 @@ else
 
     # Install rke2
     RKE2_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rke2/releases | docker run --rm -i $jqimage -r .[].tag_name | sort -V | tail -1)
-    curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=$RKE2_VERSION sh -
+    curl -sfL https://raw.githubusercontent.com/rancher/rke2/master/install.sh | INSTALL_RKE2_VERSION=$RKE2_VERSION INSTALL_RKE2_TYPE=server sh -
+    systemctl start rke2-server
     export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
     until kubectl get node | grep master | grep -q ' Ready'; do echo "Waiting for master to become Ready"; sleep 1; done
     
