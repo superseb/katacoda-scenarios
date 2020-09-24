@@ -1,6 +1,6 @@
 # Environment is being created
 
-Note: This environment runs `rancher/rancher:latest`, this is the latest development release. Please refer to the [official documentation](https://docs.rancher.com) how to setup Rancher in production.
+Note: This environment runs the latest available v2.5 release of `rancher/rancher`. Please refer to the [official documentation](https://docs.rancher.com) how to setup Rancher in production.
 
 The node `controlplane`` is used to run Rancher (single node install).
 
