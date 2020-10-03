@@ -78,8 +78,6 @@ if [ $HOSTNAME == "controlplane" ]; then
     
     echo $IMPORTCMD > /root/importcmd
     
-    clear
-    
     echo "Rancher is ready"
     echo "Login to Rancher: $RANCHER_SERVER"
     echo "Username: admin"
