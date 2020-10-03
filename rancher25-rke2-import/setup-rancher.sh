@@ -177,8 +177,6 @@ else
         sleep 5
       fi
     done
-
-    clear
     
     echo "RKE2 cluster successfully imported to Rancher"
     kubectl get nodes
