@@ -24,7 +24,7 @@ if [ $HOSTNAME == "node01" ]; then
       sleep 2
     done
 
-    docker run --restart=unless-stopped -d -p 80:80 -p 443:443 rancher/rancher:$RANCHER_VERSION
+    docker run --restart=unless-stopped --privileged -d -p 80:80 -p 443:443 rancher/rancher:$RANCHER_VERSION
     
     while true; do
       docker run --rm --net=host $curlimage -slk --connect-timeout 5 --max-time 5 https://127.0.0.1/ping && break
