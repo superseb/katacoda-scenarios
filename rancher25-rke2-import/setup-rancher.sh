@@ -20,7 +20,7 @@ if [ $HOSTNAME == "controlplane" ]; then
     RANCHER_PASSWORD=$(openssl rand -base64 12)
     echo $RANCHER_PASSWORD > /root/rancher_password
     
-    RANCHER_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rancher/releases | docker run --rm -i $jqimage -r .[].tag_name | grep ^v2.5 | sort -V | tail -1)
+    RANCHER_VERSION=$(docker run --rm --net=host $curlimage -s https://api.github.com/repos/rancher/rancher/releases | docker run --rm -i $jqimage -r .[].tag_name | grep ^v2.5 | grep -v "\-rc" | sort -V | tail -1)
 
     until docker inspect rancher/rancher:$RANCHER_VERSION > /dev/null 2>&1; do
       docker pull rancher/rancher:$RANCHER_VERSION
