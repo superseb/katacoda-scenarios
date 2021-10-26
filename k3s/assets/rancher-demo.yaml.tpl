@@ -43,5 +43,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: rancher-demo-service
-          servicePort: 8080
+          service:
+            name: rancher-demo-service
+            port:
+              number: 8080
