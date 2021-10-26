@@ -17,7 +17,7 @@
       }
     ],
     "assets": {
-        "host02": [
+        "client": [
             {"file": "rancher-demo.yaml.tpl", "target": "/root/"}
         ]
     },
