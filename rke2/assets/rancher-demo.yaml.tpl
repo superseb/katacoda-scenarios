@@ -32,7 +32,7 @@ spec:
   - protocol: TCP
     port: 8080
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: rancher-demo-ingress
@@ -42,6 +42,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: rancher-demo-service
-          servicePort: 8080
+          service:
+            name: rancher-demo-service
+            port:
+              number: 8080
