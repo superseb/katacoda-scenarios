@@ -42,6 +42,7 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Exact
         backend:
           service:
             name: rancher-demo-service
