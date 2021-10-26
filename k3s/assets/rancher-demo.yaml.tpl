@@ -32,7 +32,7 @@ spec:
   - protocol: TCP
     port: 8080
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: rancher-demo-ingress

@@ -21,6 +21,6 @@ For your convenience, the following command will wait until the node shows up as
 As soon as it shows `master` with status `Ready`, you have built your single host cluster!
 
 ```
-NAME     STATUS   ROLES    AGE   VERSION
-master   Ready    <none>   28s   v1.13.5-k3s.1
+NAME           STATUS   ROLES                  AGE     VERSION
+controlplane   Ready    control-plane,master   3m30s   v1.21.5+k3s2
 ```
