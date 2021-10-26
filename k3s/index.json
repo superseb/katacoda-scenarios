@@ -22,7 +22,8 @@
         ]
     },
     "intro": {
-      "text": "intro.md"
+      "text": "intro.md",
+      "code": "update-ca-cert.sh"
     },
     "finish": {
       "text": "finish.md"
